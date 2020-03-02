@@ -1,0 +1,8 @@
+# Ignore Node Modules
+node_modules
+npm-debug.log
+.env
+
+# Uploads dir for temp files
+_uploads
+.now

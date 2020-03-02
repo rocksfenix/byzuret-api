@@ -1,0 +1,21 @@
+{
+  "builds": [
+    { "src": "/server/*.js", "use": "@now/node" }
+  ],
+  "build": {
+    "env": {}
+  },
+  "routes": [
+    { "src": "/", "dest": "/server" },
+    { "src": "/api", "dest": "/server" },
+    { "src": "/auth", "dest": "/server" },
+    { "src": "/signup", "dest": "/server" },
+    { "src": "/designs", "dest": "/server" },
+    { "src": "/user/(?<id>[^/]+)", "dest": "/server" },
+    { "src": "/design/(?<id>[^/]+)", "dest": "/server" },
+    { "src": "/design/(?<id>[^/]+)/image", "dest": "/server" }
+  ],
+  "env": {
+    "MONGO_URI": "@mongo_uri"
+  }
+}

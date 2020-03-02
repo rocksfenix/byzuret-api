@@ -1,0 +1,51 @@
+{
+  "name": "byzuret-api",
+  "version": "0.0.1",
+  "engine": "node 5.1.1",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "cross-env NODE_ENV=development nodemon server",
+    "test": "cross-env NODE_ENV=test mocha --timeout 10000 --exit ./__test/**/*.test.js"
+  },
+  "dependencies": {
+    "async-each": "^1.0.3",
+    "aws-sdk": "^2.630.0",
+    "bcryptjs": "^2.4.3",
+    "bluebird": "^3.7.2",
+    "body-parser": "*",
+    "cloudinary": "^1.19.0",
+    "color-convert": "^2.0.1",
+    "color-thief-node": "^1.0.3",
+    "cors": "^2.8.5",
+    "delete": "^1.1.0",
+    "dotenv": "^8.2.0",
+    "express": "*",
+    "express-fileupload": "^1.1.6",
+    "ip": "^1.1.5",
+    "jsonwebtoken": "^8.5.1",
+    "method-override": "*",
+    "mime": "^2.4.4",
+    "mkdirp": "^1.0.3",
+    "moment": "^2.24.0",
+    "mongo-sanitize": "^1.0.1",
+    "mongoose": "*",
+    "mongoose-unique-validator": "^2.0.3",
+    "morgan": "^1.9.1",
+    "multiparty": "^4.2.1",
+    "parse-full-name": "^1.2.4",
+    "request": "^2.88.2",
+    "rgb-hex": "^3.0.0",
+    "shortid": "^2.2.15",
+    "util": "^0.12.2",
+    "validator": "^12.2.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "cross-env": "^7.0.0",
+    "mocha": "^7.1.0",
+    "nodemon": "^2.0.2",
+    "standard": "^14.3.1"
+  }
+}
