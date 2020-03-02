@@ -1,5 +1,20 @@
 const sanitize = require('mongo-sanitize')
 const models = require('../../models')
+const cloudinary = require('../../connections/cloudinary')
+
+const removeImage = (image) => new Promise((resolve, reject) => {
+  models.Image.findById(image._id, (error, doc) => {
+    if (error) {
+      return console.log(error)
+    }
+    doc.remove(error => {
+      if (error) {
+        return console.log(error)
+      }
+      resolve()
+    })
+  })
+})
 
 exports.getAll = async (req, res, next) => {
   try {
@@ -52,7 +67,7 @@ exports.getAll = async (req, res, next) => {
 
 exports.post = async (req, res, next) => {
   try {
-    // Esta es la logica
+    // Avoid access to users that not to be admin
     if (!req.decode.sub || (req.decode.sub && req.decode.role !== 'admin')) {
       return res.json({
         error: true,
@@ -79,7 +94,7 @@ exports.post = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
   try {
-    // Esta es la logica
+    // Avoid access to users that not to be admin
     if (!req.decode.sub || (req.decode.sub && req.decode.role !== 'admin')) {
       return res.json({
         error: true,
@@ -121,6 +136,49 @@ exports.update = async (req, res, next) => {
 
     res.json({
       design
+    })
+  } catch (error) {
+    console.log(error)
+    next(error)
+  }
+}
+
+exports.remove = async (req, res, next) => {
+  try {
+    // Avoid access to users that not to be admin
+    if (!req.decode.sub || (req.decode.sub && req.decode.role !== 'admin')) {
+      return res.json({
+        error: true,
+        errorMessage: 'No tienes permiso de realizar esta operacion'
+      })
+    }
+
+    // Search by id
+    const { id } = req.params
+    const design = await models.Design.findById(id).populate('author images')
+
+    if (!design) {
+      return res.json({
+        error: true,
+        errorMessage: `404 No exite design con ID: ${id}`
+      })
+    }
+
+    design.images.forEach((image) => {
+      // Remove images from cloudinary
+      cloudinary.removeImage(image.public_id)
+    })
+
+    // Remove images from db
+    await Promise.all(design.images.map(async img => {
+      return removeImage(img)
+    }))
+
+    await design.remove()
+
+    res.json({
+      design,
+      message: `Design with id: ${id} was removed successfully`
     })
   } catch (error) {
     console.log(error)

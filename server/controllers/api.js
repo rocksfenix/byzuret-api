@@ -35,6 +35,7 @@ api.route('/designs')
 api.route('/design/:id')
   .get(design.get)
   .put(design.update)
+  .delete(design.remove)
 
 api.route('/design/:id/image')
   .post(image.addImage)
