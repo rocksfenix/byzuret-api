@@ -12,7 +12,8 @@ const ImageSchema = new Schema({
   width: Number,
   height: Number,
   bytes: Number,
-  secure_url: String
+  secure_url: String,
+  design_id: String
 }, { timestamps: true })
 
 module.exports = model('Image', ImageSchema)

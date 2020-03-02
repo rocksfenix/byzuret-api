@@ -72,7 +72,7 @@ exports.addImage = async (req, res, next) => {
     }
 
     // Upload image to cloudinary
-    const result = await cloudinary.removeImage(req)
+    const result = await cloudinary.uploadImage(req)
 
     if (!result) {
       return res.json({
@@ -83,6 +83,7 @@ exports.addImage = async (req, res, next) => {
     // Creamos un modelo image
     const image = await models.Image.create({
       ...result,
+      design_id: design._id,
       author: req.decode.sub
     })
 
@@ -93,8 +94,6 @@ exports.addImage = async (req, res, next) => {
     ]
 
     await design.save()
-
-    // populate the design
 
     res.json({
       design,
@@ -124,6 +123,11 @@ exports.remove = async (req, res, next) => {
         errorMessage: `404 No existe imagen con ese ID: ${id}`
       })
     }
+
+    // Remove from desings images: [ '_id-image' ]
+    const design = await models.Design.findById(image.design_id)
+    design.images.pull(image._id)
+    design.save()
 
     // Remove from cloudinary
     const result = await cloudinary.removeImage(image.public_id)
