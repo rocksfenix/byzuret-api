@@ -11,11 +11,13 @@
     { "src": "/auth", "dest": "/server" },
     { "src": "/signup", "dest": "/server" },
     { "src": "/designs", "dest": "/server" },
+    { "src": "/rebuild", "dest": "/server" },
     { "src": "/user/(?<id>[^/]+)", "dest": "/server" },
     { "src": "/design/(?<id>[^/]+)", "dest": "/server" },
     { "src": "/design/(?<id>[^/]+)/image", "dest": "/server" }
   ],
   "env": {
-    "MONGO_URI": "@mongo_uri"
+    "MONGO_URI": "@mongo_uri",
+    "NETLIFY_BUILD_HOOK": "@netlify_build_hook"
   }
 }
