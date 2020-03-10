@@ -16,7 +16,7 @@ describe('/', () => {
     chai.request(app)
       .get('/')
       .end((e, res) => {
-        expect(res.body.api).be.equal('buZuret API V1')
+        expect(res.body.api).be.equal('byZuret API V1')
         expect(res.body.version).be.equal(1)
         expect(res.status).be.equal(200)
         done()

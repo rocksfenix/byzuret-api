@@ -70,10 +70,10 @@ UserSchema.methods.toJSON = function () {
     firstName: this.firstName,
     lastName: this.lastName,
     role: this.role,
-    email: this.email,
+    // email: this.email,
     _id: this._id,
-    avatar: this.avatar || avatarDefault,
-    bio: this.bio
+    avatar: this.avatar || avatarDefault
+    // bio: this.bio
   }
 }
 

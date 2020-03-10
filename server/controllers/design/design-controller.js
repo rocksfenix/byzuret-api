@@ -1,6 +1,13 @@
 const sanitize = require('mongo-sanitize')
 const models = require('../../models')
 const cloudinary = require('../../connections/cloudinary')
+const { uniqueNamesGenerator, adjectives, countries, names } = require('unique-names-generator')
+
+const getShortName = () => uniqueNamesGenerator({
+  dictionaries: [adjectives, names, countries],
+  separator: ' ',
+  length: 3
+})
 
 const removeImage = (image) => new Promise((resolve, reject) => {
   models.Image.findById(image._id, (error, doc) => {
@@ -18,7 +25,7 @@ const removeImage = (image) => new Promise((resolve, reject) => {
 
 exports.getAll = async (req, res, next) => {
   try {
-    let limit = 15
+    let limit = 50
     let skip = 0
     let query = {}
 
@@ -29,6 +36,7 @@ exports.getAll = async (req, res, next) => {
     if (text) {
       query = {
         $or: [
+          { title: { $regex: text, $options: 'i' } },
           { description: { $regex: text, $options: 'i' } }
         ]
       }
@@ -54,9 +62,36 @@ exports.getAll = async (req, res, next) => {
       .sort({ createdAt: -1 })
       .exec()
 
+    const defaultImages = [{
+      _id: 'def',
+      author: '',
+      public_id: '',
+      format: 'String',
+      width: 100,
+      height: 100,
+      bytes: '',
+      secure_url: '',
+      design_id: ''
+    }]
+
     res.json({
       error: null,
-      designs,
+      designs: designs.map(design => ({
+        _id: design._id,
+        author: design.author,
+        title: design.title,
+        type: design.type,
+        sizes: design.sizes,
+        colors: design.colors,
+        price: design.price,
+        lotePrice: design.lotePrice,
+        off: design.off,
+        composition: design.composition,
+        description: design.description,
+        images: design.images.length
+          ? design.images
+          : defaultImages
+      })),
       total,
       hasMore: skip + designs.length < total
     })
@@ -75,13 +110,13 @@ exports.post = async (req, res, next) => {
       })
     }
 
+    const title = req.body.design.title || `Jeans ${getShortName()}`
+
     // We created the design
     const design = await models.Design.create({
-      title: req.body.design.title,
+      title,
       author: req.decode.sub
     })
-
-    console.log(design)
 
     res.json({
       design
