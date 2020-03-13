@@ -47,5 +47,6 @@ api.delete('/image/:id', image.remove)
 
 // General
 api.post('/rebuild', general.rebuildApp)
+api.post('/contact-form', general.contactForm)
 
 module.exports = api

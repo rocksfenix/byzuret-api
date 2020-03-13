@@ -18,6 +18,8 @@
   ],
   "env": {
     "MONGO_URI": "@mongo_uri",
-    "NETLIFY_BUILD_HOOK": "@netlify_build_hook"
+    "NETLIFY_BUILD_HOOK": "@netlify_build_hook",
+    "SENDGRID_API_KEY": "@sendgrid_api_key_byzuret",
+    "RECAPTCHA_KEY_SECRET": "@recaptcha_key_secret_byzuret"
   }
 }
