@@ -23,7 +23,9 @@ const app = express()
 // Don't expose any software information to potential hackers.
 app.disable('x-powered-by')
 
-app.use(cors())
+app.use(cors({
+  origin: ['http://localhost', 'https://byzuret.com']
+}))
 app.use(morgan('dev'))
 app.use(methodOverride())
 app.use(bodyParser.json({ limit: '5mb' }))

@@ -12,6 +12,7 @@
     { "src": "/signup", "dest": "/server" },
     { "src": "/designs", "dest": "/server" },
     { "src": "/rebuild", "dest": "/server" },
+    { "src": "/contact-form", "dest": "/server" },
     { "src": "/user/(?<id>[^/]+)", "dest": "/server" },
     { "src": "/design/(?<id>[^/]+)", "dest": "/server" },
     { "src": "/design/(?<id>[^/]+)/image", "dest": "/server" }
