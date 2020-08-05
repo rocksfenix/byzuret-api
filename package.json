@@ -23,7 +23,7 @@
     "delete": "^1.1.0",
     "dotenv": "^8.2.0",
     "express": "*",
-    "express-fileupload": "^1.1.6",
+    "express-fileupload": "^1.1.9",
     "ip": "^1.1.5",
     "jsonwebtoken": "^8.5.1",
     "method-override": "*",
