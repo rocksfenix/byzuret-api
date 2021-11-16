@@ -11,7 +11,7 @@
   "dependencies": {
     "@sendgrid/mail": "^6.5.4",
     "async-each": "^1.0.3",
-    "aws-sdk": "^2.630.0",
+    "aws-sdk": "^2.814.0",
     "axios": "^0.21.2",
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.7.2",
